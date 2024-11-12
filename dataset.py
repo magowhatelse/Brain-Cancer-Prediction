@@ -33,9 +33,12 @@ class MRI_dataset(Dataset):
             transforms.CenterCrop(224),
             transforms.ToTensor(),
             transforms.Normalize(
-                mean=[0.1543, 0.1543, 0.1543],
-                std=[0.1668, 0.1668, 0.1668]
+                mean=[0.2114, 0.2114, 0.2114],
+                std=[0.9833, 0.9833, 0.9833]
+                
             )
+        # mean=[0.2114, 0.2114, 0.2114] 
+        # std=[0.9833, 0.9833, 0.9833]
         ])
         
         # Additional augmentations for training

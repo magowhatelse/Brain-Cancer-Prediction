@@ -85,7 +85,7 @@ def evaluate_model():
         disp.plot()
 
         out_dir = "C:\Brain Cancer Prediction\data exploration\plots"
-        plot_filename = os.path.join(out_dir, f"{model_name}_{fold}.png")
+        plot_filename = os.path.join(out_dir, f"{model_name}_confusion_matrix_{fold}.png")
         plt.savefig(plot_filename)
 
         break

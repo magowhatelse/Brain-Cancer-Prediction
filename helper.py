@@ -9,8 +9,9 @@ import numpy as np
 
 from dataset import MRI_dataset
 from args import get_args
-args = get_args()
-def get_normalization_parameters(args):
+
+def get_normalization_parameters():
+    args = get_args()
     """_summary_
 
     Args:
@@ -20,7 +21,7 @@ def get_normalization_parameters(args):
         mean, std: params for normalization
 
     """
-    train_set = pd.read_csv(os.path.join(args.csv_dir, "data.csv"))
+    train_set = pd.read_csv(os.path.join(args.csv_dir, "train_data.csv"))        ### FIX THIS 
     train_dataset = MRI_dataset(dataset=train_set)
 
     # get loader
@@ -42,9 +43,13 @@ def get_normalization_parameters(args):
 
     return mean, std
 
+# ALL DATA
 # Mean: tensor([0.1543, 0.1543, 0.1543])
 # Std: tensor([0.1668, 0.1668, 0.1668])
 
+# TRAIN DATA
+#Mean: tensor([0.2114, 0.2114, 0.2114]) 
+# Std: tensor([0.9833, 0.9833, 0.9833])
 def plot_summary_metrics(df, fold, out_dir):
         """
         Plots the training and validation metrics over all epochs after training completes.
@@ -101,3 +106,6 @@ def plot_summary_metrics(df, fold, out_dir):
         plt.close(fig)
 
 
+if __name__ == "__main__":
+    mean, std = get_normalization_parameters()
+    print(mean, std)
