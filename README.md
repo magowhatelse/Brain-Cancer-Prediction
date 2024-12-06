@@ -1,7 +1,10 @@
 # Brain Cancer MRI Classification Project
 
-## Overview
-This project focuses on image classification of brain cancer MRI scans using machine learning and deep learning techniques. The project utilizes the Bangladesh Brain Cancer MRI Dataset to develop and train models for automated medical image diagnostics.
+## Project goal
+The aim of this project is to develop a reliable and efficient image classification model that uses Convolutional Neural Networks (CNNs) to analyze medical image data and classify brain tumors. This should support the diagnostic processes, improve the accuracy of the results and reduce the workload of radiologists.
+
+## Motivation
+Brain tumors are one of the most serious diseases that require early and accurate diagnosis to improve the prognosis of patients. Traditional diagnostic techniques are based on manual analysis of MRI or CT images, which can be time-consuming and error-prone. The use of CNNs in image processing offers the potential to detect subtle patterns in medical images that are difficult for the human eye to identify.
 
 ## Dataset Information
 - **Dataset Name**: Bangladesh Brain Cancer MRI Dataset
