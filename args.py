@@ -1,6 +1,11 @@
 import argparse
 
 def get_args():
+    """ func to get the arguments e.g hyperparmeter
+
+    Returns:
+        args: various arguments requiered for the training
+    """
     parser = argparse.ArgumentParser(description="")
     parser.add_argument("--backbone",
                         type=str,
@@ -17,8 +22,8 @@ def get_args():
     parser.add_argument("--learning_rate", "--learning_rate", type=int, default=0.001,
                         choices=[0.0001, 0.00001, 0.005])
     
-    parser.add_argument("--epochs", "--epochs", type=int, default=100,
-                        choices=[100, 500, 1000])
+    parser.add_argument("--epochs", "--epochs", type=int, default=5,
+                        choices=[5, 10, 100, 500, 1000])
 
 
     args = parser.parse_args()

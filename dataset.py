@@ -33,12 +33,11 @@ class MRI_dataset(Dataset):
             transforms.CenterCrop(224),
             transforms.ToTensor(),
             transforms.Normalize(
-                mean=[0.2114, 0.2114, 0.2114],
-                std=[0.9833, 0.9833, 0.9833]
-                
+
+                # calculated with helper.py get_normalization_parameters()
+                mean=[-0.0217, -0.0217, -0.0217],
+                std=[0.1669, 0.1669, 0.1669] 
             )
-        # mean=[0.2114, 0.2114, 0.2114] 
-        # std=[0.9833, 0.9833, 0.9833]
         ])
         
         # Additional augmentations for training

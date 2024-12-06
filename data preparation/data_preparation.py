@@ -49,8 +49,6 @@ def create_csv_and_folds():
     y_validation.value_counts().sort_index().plot(kind="bar")
     # plt.savefig("validation_distribution")
 
-
-
     df = pd.read_csv(out_dir)
     train = df.drop(columns=["Cancer"])
     test = df["Cancer"]
@@ -63,6 +61,9 @@ def create_csv_and_folds():
     path_train = os.path.join(output_dir, "test_data.csv")
     test_data.to_csv(path_train ,index=False)
 
+    train_data = pd.concat([X_train, y_train], axis=1)
+    path_train = os.path.join(output_dir, "train_data.csv")
+    train_data.to_csv(path_train ,index=False)
 
     X = X_train
     y = y_train

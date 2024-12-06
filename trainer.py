@@ -43,6 +43,11 @@ class Trainer:
         self.best_model_path = ''
         
     def train_epoch(self):
+        """method to train one epoch
+
+        Returns:
+            metrics: loss, acc, balanced acc, roc auc,average precison 
+        """
         self.model.train()
         running_loss = 0.0
         y_pred, y_true = [], []
@@ -98,6 +103,11 @@ class Trainer:
     
     @torch.no_grad()
     def validate(self):
+        """ method to validate 
+
+        Returns:
+            validation metrics: loss, acc, balanced acc, roc auc,average precison
+        """
         self.model.eval()
         running_loss = 0.0
         y_pred, y_true, y_pred_soft = [], [], []
@@ -128,8 +138,15 @@ class Trainer:
         return val_metrics
     
     def train(self, fold):
-        """Main training loop"""
-        model_name = str(self.args.backbone)
+        """ main train loop
+
+        Args:
+            fold : 1-5
+
+        Returns:
+            dataframe: train and validation metrics
+        """
+        model_name = "ResNet34Pretrained"
         metrics_history = {
             'train_loss': [], 'train_balanced_acc': [],      
             'train_roc_auc': [], 'train_avg_precision': [],

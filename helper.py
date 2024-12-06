@@ -21,7 +21,7 @@ def get_normalization_parameters():
         mean, std: params for normalization
 
     """
-    train_set = pd.read_csv(os.path.join(args.csv_dir, "train_data.csv"))        ### FIX THIS 
+    train_set = pd.read_csv(os.path.join(args.csv_dir, "train_data.csv"))        
     train_dataset = MRI_dataset(dataset=train_set)
 
     # get loader
@@ -33,13 +33,14 @@ def get_normalization_parameters():
 
     for images in loader:
         images = images["img"]
-        images = images.view(images.size(0), images.size(1), -1)  # Flatten H x W into a vector
+        images = images.view(images.size(0), images.size(1), -1)  
         mean += images.mean(2).sum(0)
         std += images.std(2).sum(0)
-        n_samples += images.size(0)
+        n_samples += images.size(0) # = batchsize
 
     mean /= n_samples
     std /= n_samples
+
 
     return mean, std
 
@@ -47,9 +48,9 @@ def get_normalization_parameters():
 # Mean: tensor([0.1543, 0.1543, 0.1543])
 # Std: tensor([0.1668, 0.1668, 0.1668])
 
-# TRAIN DATA
-#Mean: tensor([0.2114, 0.2114, 0.2114]) 
-# Std: tensor([0.9833, 0.9833, 0.9833])
+# Mean:  tensor([-0.0217, -0.0217, -0.0217])
+# Std:  tensor([0.1669, 0.1669, 0.1669])
+
 def plot_summary_metrics(df, fold, out_dir):
         """
         Plots the training and validation metrics over all epochs after training completes.
@@ -108,4 +109,5 @@ def plot_summary_metrics(df, fold, out_dir):
 
 if __name__ == "__main__":
     mean, std = get_normalization_parameters()
-    print(mean, std)
+    print("Mean: ",mean)
+    print("Std: ",std)

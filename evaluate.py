@@ -10,7 +10,21 @@ from sklearn.metrics import balanced_accuracy_score, confusion_matrix, roc_auc_s
 import matplotlib.pyplot as plt
 import torch.optim as optim
 
+
+
 def helper(model, test_loader, device):
+    """_summary_
+
+    Args:
+        model : trained model
+        test_loader
+        device: cuda
+
+    Returns:
+        results: 
+        metrics such as acc, balanced acc and precision,
+        roc auc score and the list of the predicted and ground truth
+    """
     model.eval()
 
     y_pred = []
@@ -21,11 +35,16 @@ def helper(model, test_loader, device):
     correct = 0
     total = 0
 
+    # we dont need the gradients
     with torch.no_grad():
+
+        # iterate over test loader
         for batch in test_loader:
             inputs = batch["img"].to(device)
             targets = batch["target"].to(device)
             outputs = model(inputs)
+
+            # apply softmax function 
             outputs_softmax = torch.softmax(outputs, dim=1)
             _, predicted = torch.max(outputs_softmax, 1)
 
@@ -44,14 +63,22 @@ def helper(model, test_loader, device):
     roc_auc = roc_auc_score(y_true, y_pred_soft, multi_class="ovo", average="macro")
     precision = average_precision_score(y_true, y_pred_soft, average="macro")
 
+
+
+
+    
+    # MISSING!!!!!!!!
     # fpr, tpr, _ = precision_recall_curve(y_true, y_pred_soft[:, 1])
     # pr_auc = auc(fpr, tpr)
 
     return accuracy, balanced_accuracy, roc_auc, precision, y_pred, y_true, y_pred_soft
 
 def evaluate_model():
+    """
+    function to plot and save the evaluation metric
+    """
     args = get_args()
-    model_name = args.backbone
+    model_name = "ResNet34Pretrained"
 
     test_set = pd.read_csv(r"C:\Brain Cancer Prediction\data\CSV\test_data.csv")
     test_dataset = MRI_dataset(dataset=test_set)
@@ -64,22 +91,29 @@ def evaluate_model():
     folds_y_true = []
     folds_y_pred_soft = []
 
+    # iterate over the 5 folds to get the 5 trained modelss
     for fold in range(5):
         print('Fold: ', fold)
+
+        # get the trained weights of each model for each fold
         path_weights_fold = os.path.join(args.out_dir, model_name + fr'__fold_{fold}.pth')
 
+        # get trained model
         model = MyModel().to(device)
         model.load_state_dict(torch.load(path_weights_fold), strict=False)
 
+        # calc the metrics by calling the helper()
         accuracy, balanced_accuracy, roc_auc, precision, y_pred, y_true, y_pred_soft = helper(model, test_loader, device)
 
         print(f'Accuracy of the network: {accuracy} %')
         print(f"Balanced Accuracy: {balanced_accuracy}, ROC-AUC-Score: {roc_auc},  Precision: {precision}")
 
+        # add the predicted values and the targets to the list
         folds_y_pred.extend(y_pred)
         folds_y_true.extend(y_true)
         folds_y_pred_soft.extend(y_pred_soft)
 
+        # display the confusion matrix of each model s
         cm = confusion_matrix(y_true, y_pred)
         disp = ConfusionMatrixDisplay(cm)
         disp.plot()
@@ -88,7 +122,8 @@ def evaluate_model():
         plot_filename = os.path.join(out_dir, f"{model_name}_confusion_matrix_{fold}.png")
         plt.savefig(plot_filename)
 
-        break
+
+       
 
   
   
