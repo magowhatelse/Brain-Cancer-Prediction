@@ -49,9 +49,8 @@ def main():
         df= t.train(fold=fold)
 
         # 7. plot results in each fold
-        plot_summary_metrics(df=df, fold=fold, out_dir=r"C:\Brain Cancer Prediction\data exploration\plots")
+        plot_summary_metrics(df=df, fold=fold, out_dir=r"C:\Brain Cancer Prediction\results\plots")
 
-        break
 
     # 7. step: validate the model
     evaluate_model()
