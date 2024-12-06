@@ -85,7 +85,6 @@ class Trainer:
             train_prc.update(outputs_softmax, targets)
             all_prc_scores.append(train_prc.compute().item())
             
-            # Update progress bar
             pbar.set_postfix({
                 'loss': f"{loss.item():.4f}",
                 'ROC': f"{np.mean(all_roc_scores):.4f}"
