@@ -71,9 +71,5 @@ brain-cancer-mri-classification/
 
 ## License 
 This project is under MIT license
-## Citation
-If you use this dataset or project in your research, please cite:
 
-Rahman, Md Mizanur (2024). Bangladesh Brain Cancer MRI Dataset. 
-DOI: 10.17632/mk56jw9rns.1
 
