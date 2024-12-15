@@ -6,7 +6,7 @@ from dataset import MRI_dataset
 from model import MyModel
 from args import get_args
 import pandas as pd
-from sklearn.metrics import balanced_accuracy_score, confusion_matrix, roc_auc_score, average_precision_score, ConfusionMatrixDisplay, precision_recall_curve, auc
+from sklearn.metrics import balanced_accuracy_score, confusion_matrix, roc_auc_score, average_precision_score, ConfusionMatrixDisplay, classification_report, auc
 import matplotlib.pyplot as plt
 import torch.optim as optim
 
@@ -63,14 +63,6 @@ def helper(model, test_loader, device):
     roc_auc = roc_auc_score(y_true, y_pred_soft, multi_class="ovo", average="macro")
     precision = average_precision_score(y_true, y_pred_soft, average="macro")
 
-
-
-
-    
-    # MISSING!!!!!!!!
-    # fpr, tpr, _ = precision_recall_curve(y_true, y_pred_soft[:, 1])
-    # pr_auc = auc(fpr, tpr)
-
     return accuracy, balanced_accuracy, roc_auc, precision, y_pred, y_true, y_pred_soft
 
 def evaluate_model():
@@ -78,7 +70,7 @@ def evaluate_model():
     function to plot and save the evaluation metric
     """
     args = get_args()
-    model_name = "ResNet34Pretrained"
+    model_name = "VGG16"
 
     test_set = pd.read_csv(r"C:\Brain Cancer Prediction\data\CSV\test_data.csv")
     test_dataset = MRI_dataset(dataset=test_set)
@@ -118,36 +110,11 @@ def evaluate_model():
         disp = ConfusionMatrixDisplay(cm)
         disp.plot()
 
-        out_dir = "C:\Brain Cancer Prediction\data exploration\plots"
-        plot_filename = os.path.join(out_dir, f"{model_name}_confusion_matrix_{fold}.png")
+        out_dir = r"C:\Brain Cancer Prediction\results\plots"
+        plot_filename = os.path.join(out_dir, fr"{model_name}_confusion_matrix_{fold}.png")
         plt.savefig(plot_filename)
 
-
-       
-
-  
-  
-
-    # # Plot the ROC curve
-    # plt.figure(figsize=(8, 6))
-    # plt.plot(fpr, tpr, color='darkorange', lw=2, label='ROC curve (area = %0.2f)' % overall_roc_auc)
-    # plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
-    # plt.xlim([0.0, 1.0])
-    # plt.ylim([0.0, 1.05])
-    # plt.xlabel('False Positive Rate')
-    # plt.ylabel('True Positive Rate')
-    # plt.title('Receiver Operating Characteristic (ROC) Curve')
-    # plt.legend(loc="lower right")
-    # plt.savefig(os.path.join(out_dir, "roc_curve.png"))
-
-    # Plot the Precision-Recall curve
-    # plt.figure(figsize=(8, 6))
-    # plt.plot(tpr, [x[1] for x in folds_y_pred_soft], color='darkorange', lw=2, label='PR curve (area = %0.2f)' % overall_pr_auc)
-    # plt.xlabel('Recall')
-    # plt.ylabel('Precision')
-    # plt.title('Precision-Recall Curve')
-    # plt.legend(loc="lower left")
-    # plt.savefig(os.path.join(out_dir, "pr_curve.png"))
+        print(classification_report(y_true, y_pred))
 
 if __name__ == '__main__':
     evaluate_model()
