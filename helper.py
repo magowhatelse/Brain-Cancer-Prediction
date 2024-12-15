@@ -51,7 +51,7 @@ def get_normalization_parameters():
 # Mean:  tensor([-0.0217, -0.0217, -0.0217])
 # Std:  tensor([0.1669, 0.1669, 0.1669])
 
-def plot_summary_metrics(df, fold, out_dir):
+def plot_summary_metrics(df, fold, out_dir, model_name):
         """
         Plots the training and validation metrics over all epochs after training completes.
         Saves the summary plot in the specified output directory.
@@ -100,7 +100,7 @@ def plot_summary_metrics(df, fold, out_dir):
         plt.tight_layout(rect=[0, 0, 1, 0.96])
         
         # Save the summary plot
-        plot_filename = os.path.join(out_dir, f"summary_metrics_fold_{fold}.png")
+        plot_filename = os.path.join(out_dir,f"{model_name}_summary_metrics_fold_{fold}.png")
         plt.savefig(plot_filename)
         
         plt.show()

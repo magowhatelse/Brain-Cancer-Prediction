@@ -9,8 +9,8 @@ def get_args():
     parser = argparse.ArgumentParser(description="")
     parser.add_argument("--backbone",
                         type=str,
-                        choices=["resnet18", "resnet34", "resnet50"],
-                        default="resnet34")
+                        choices=["resnet18", "resnet34", "resnet50", "vgg16"],
+                        default="vgg16")
     # define output directory (model results, weights)
     parser.add_argument("--out_dir", "--out_dir", type=str, default="session") 
     # CSV 
@@ -22,8 +22,8 @@ def get_args():
     parser.add_argument("--learning_rate", "--learning_rate", type=int, default=0.001,
                         choices=[0.0001, 0.00001, 0.005])
     
-    parser.add_argument("--epochs", "--epochs", type=int, default=5,
-                        choices=[5, 10, 100, 500, 1000])
+    parser.add_argument("--epochs", "--epochs", type=int, default=30,
+                        choices=[5, 10, 30, 100, 500, 1000])
 
 
     args = parser.parse_args()
