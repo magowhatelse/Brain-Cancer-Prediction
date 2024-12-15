@@ -145,7 +145,7 @@ class Trainer:
         Returns:
             dataframe: train and validation metrics
         """
-        model_name = "ResNet34Pretrained"
+        model_name = "VGG16"
         metrics_history = {
             'train_loss': [], 'train_balanced_acc': [],      
             'train_roc_auc': [], 'train_avg_precision': [],

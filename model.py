@@ -4,9 +4,15 @@ from net import CustomCNN
 from torchvision.models import ResNet34_Weights, ResNet18_Weights
 
 class MyModel(nn.Module):
-    def __init__(self, backbone="resnet34", num_classes=3):
+    def __init__(self, backbone="vgg16", num_classes=3):
         super(MyModel, self).__init__()
-
+        if backbone == "vgg16":
+            self.model = models.vgg16(weights=models.VGG16_Weights.DEFAULT)
+            self.model.classifier[6] = nn.Linear(self.model.classifier[6].in_features, 3)
+            for param in self.model.classifier.parameters():
+                param.requires_grad = False
+            for param in self.model.classifier[6].parameters():
+                param.requires_grad = True
         if backbone == "CustomCNN":
             self.models = CustomCNN()
         if backbone == "resnet18":
